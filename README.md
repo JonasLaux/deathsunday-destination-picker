@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DeathBySundayCrew — Destination Picker
+
+Interactive app for a group of friends to explore, compare, filter, and vote on ~50 European cities for a 4-day boys trip in November from Frankfurt.
+
+Share a single link — everyone votes in real-time.
+
+## Features
+
+- **50 European cities** with flight prices, accommodation, beer prices, nightlife/culture ratings, weather data
+- **Weighted scoring** — drag sliders to prioritize what matters (nightlife vs budget vs weather)
+- **Interactive dark map** — Leaflet with CartoDB dark_matter tiles, clustered markers, color-coded by score
+- **Filters** — by region, max price, min nightlife, direct flights only
+- **Real-time voting** — powered by Firestore, syncs across all users instantly
+- **Compare mode** — side-by-side comparison of up to 3 cities
+- **Responsive** — mobile tab toggle (map/list), desktop 55/45 split
+
+## Stack
+
+Next.js 16 · TypeScript · Tailwind CSS v4 · Leaflet (react-leaflet) · Firebase Firestore · Vercel
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Firebase Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Create a Firebase project with Firestore enabled
+2. Copy `.env.local.example` to `.env.local` and fill in your credentials
+3. Seed cities: `npx tsx scripts/seed.ts`
 
-## Learn More
+Without Firebase credentials, the app runs with static city data and local-only voting.
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/            # Next.js App Router pages & layout
+├── components/     # UI components (map, list, scoring, voting, compare)
+├── data/           # Static city data (fallback + seed source)
+├── hooks/          # React hooks (scoring, votes, filters, identity, compare)
+├── lib/            # Firebase config, scoring engine, constants
+└── types/          # TypeScript interfaces
+```
