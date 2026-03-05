@@ -11,6 +11,7 @@ interface CityListProps {
   compareIds: string[];
   getVoteCount: (cityId: string) => number;
   hasVoted: (cityId: string) => boolean;
+  getVoters: (cityId: string) => string[];
 }
 
 export function CityList({
@@ -21,6 +22,7 @@ export function CityList({
   compareIds,
   getVoteCount,
   hasVoted,
+  getVoters,
 }: CityListProps) {
   return (
     <div className="flex flex-col gap-4">
@@ -38,6 +40,7 @@ export function CityList({
             isComparing={compareIds.includes(city.id)}
             getVoteCount={getVoteCount}
             hasVoted={hasVoted}
+            getVoters={getVoters}
           />
         ))}
       </div>

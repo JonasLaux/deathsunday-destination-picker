@@ -16,6 +16,7 @@ interface CityMarkerProps {
   isComparing: boolean;
   getVoteCount: (cityId: string) => number;
   hasVoted: (cityId: string, userName: string) => boolean;
+  getVoters: (cityId: string) => string[];
 }
 
 function getMarkerColor(props: {
@@ -42,6 +43,7 @@ export function CityMarker({
   isComparing,
   getVoteCount,
   hasVoted,
+  getVoters,
 }: CityMarkerProps) {
   const color = getMarkerColor({
     rank,
@@ -84,6 +86,7 @@ export function CityMarker({
           isComparing={isComparing}
           getVoteCount={getVoteCount}
           hasVoted={hasVoted}
+          getVoters={getVoters}
         />
       </Popup>
     </Marker>

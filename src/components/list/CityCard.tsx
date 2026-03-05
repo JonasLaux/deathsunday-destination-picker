@@ -23,6 +23,7 @@ interface CityCardProps {
   isComparing: boolean;
   getVoteCount: (cityId: string) => number;
   hasVoted: (cityId: string) => boolean;
+  getVoters: (cityId: string) => string[];
 }
 
 function scoreColor(score: number): string {
@@ -51,9 +52,11 @@ export function CityCard({
   isComparing,
   getVoteCount,
   hasVoted,
+  getVoters,
 }: CityCardProps) {
   const voted = hasVoted(city.id);
   const voteCount = getVoteCount(city.id);
+  const voters = getVoters(city.id);
 
   return (
     <GlowCard>
@@ -104,17 +107,28 @@ export function CityCard({
 
         {/* Actions */}
         <div className="flex items-center gap-2 pt-1">
-          <button
-            onClick={() => onToggleVote(city.id)}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 border
-              ${voted
-                ? "bg-neon-red/20 border-neon-red/40 text-neon-red"
-                : "bg-card border-border text-muted hover:border-neon-red/30 hover:text-neon-red"
-              }`}
-          >
-            <Star className={`w-4 h-4 ${voted ? "fill-neon-red" : ""}`} />
-            <span>{voteCount}</span>
-          </button>
+          <div className="relative group">
+            <button
+              onClick={() => onToggleVote(city.id)}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 border
+                ${voted
+                  ? "bg-neon-red/20 border-neon-red/40 text-neon-red"
+                  : "bg-card border-border text-muted hover:border-neon-red/30 hover:text-neon-red"
+                }`}
+            >
+              <Star className={`w-4 h-4 ${voted ? "fill-neon-red" : ""}`} />
+              <span>{voteCount}</span>
+            </button>
+            {voters.length > 0 && (
+              <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block z-50">
+                <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-xl text-xs whitespace-nowrap">
+                  {voters.map((v) => (
+                    <div key={v} className="text-foreground capitalize">{v}</div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           <button
             onClick={() => onToggleCompare(city.id)}

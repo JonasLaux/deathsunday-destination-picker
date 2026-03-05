@@ -29,7 +29,7 @@ export default function Home() {
 
   const { cities } = useCities();
   const { userName, setUserName } = useUserIdentity();
-  const { votes, toggleVote, getVoteCount, hasVoted } = useVotes();
+  const { votes, toggleVote, getVoteCount, hasVoted, getVoters } = useVotes();
   const { filters, setFilters, sortField, setSortField, filterAndSort } = useFilters();
   const { compareIds, toggleCompare, clearCompare } = useCompare();
 
@@ -142,6 +142,7 @@ export default function Home() {
             compareIds={compareIds}
             getVoteCount={getVoteCount}
             hasVoted={hasVoted}
+            getVoters={getVoters}
           />
         </div>
 
@@ -159,6 +160,7 @@ export default function Home() {
             compareIds={compareIds}
             getVoteCount={getVoteCount}
             hasVoted={(cityId) => hasVoted(cityId, userName)}
+            getVoters={getVoters}
           />
         </div>
       </div>

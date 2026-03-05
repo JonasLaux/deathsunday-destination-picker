@@ -20,6 +20,7 @@ interface MapContainerProps {
   compareIds: string[];
   getVoteCount: (cityId: string) => number;
   hasVoted: (cityId: string, userName: string) => boolean;
+  getVoters: (cityId: string) => string[];
 }
 
 export function MapContainer(props: MapContainerProps) {

@@ -66,5 +66,9 @@ export function useVotes() {
     return Boolean(votes[cityId]?.[userName]);
   }
 
-  return { votes, toggleVote, getVoteCount, hasVoted };
+  function getVoters(cityId: string): string[] {
+    return Object.keys(votes[cityId] ?? {});
+  }
+
+  return { votes, toggleVote, getVoteCount, hasVoted, getVoters };
 }

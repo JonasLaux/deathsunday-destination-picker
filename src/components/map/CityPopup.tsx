@@ -10,6 +10,7 @@ interface CityPopupProps {
   isComparing: boolean;
   getVoteCount: (cityId: string) => number;
   hasVoted: (cityId: string, userName: string) => boolean;
+  getVoters: (cityId: string) => string[];
 }
 
 export function CityPopup({
@@ -20,9 +21,11 @@ export function CityPopup({
   isComparing,
   getVoteCount,
   hasVoted,
+  getVoters,
 }: CityPopupProps) {
   const voted = hasVoted(city.id, userName);
   const voteCount = getVoteCount(city.id);
+  const voters = getVoters(city.id);
 
   return (
     <div
@@ -94,6 +97,7 @@ export function CityPopup({
       <div style={{ display: "flex", gap: 6 }}>
         <button
           onClick={() => onToggleVote(city.id, userName)}
+          title={voters.length > 0 ? voters.join(", ") : undefined}
           style={{
             flex: 1,
             display: "flex",
@@ -137,6 +141,18 @@ export function CityPopup({
           {isComparing ? "Added" : "Compare"}
         </button>
       </div>
+
+      {/* Voter names */}
+      {voters.length > 0 && (
+        <div style={{ marginTop: 6, fontSize: 10, color: "#666" }}>
+          {voters.map((v) => (
+            <span key={v} style={{ textTransform: "capitalize" }}>
+              {v}
+              {voters.indexOf(v) < voters.length - 1 ? ", " : ""}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -14,6 +14,7 @@ interface MapViewProps {
   compareIds: string[];
   getVoteCount: (cityId: string) => number;
   hasVoted: (cityId: string, userName: string) => boolean;
+  getVoters: (cityId: string) => string[];
 }
 
 export function MapView({
@@ -24,6 +25,7 @@ export function MapView({
   compareIds,
   getVoteCount,
   hasVoted,
+  getVoters,
 }: MapViewProps) {
   // Determine top-voted city id (if any votes exist)
   const mostVotedId = cities.reduce<string | null>((topId, city) => {
@@ -73,6 +75,7 @@ export function MapView({
               isComparing={compareIds.includes(city.id)}
               getVoteCount={getVoteCount}
               hasVoted={hasVoted}
+              getVoters={getVoters}
             />
           );
         })}

@@ -10,13 +10,18 @@ export function useUserIdentity() {
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
-      setUserNameState(stored);
+      const normalized = stored.toLowerCase();
+      if (normalized !== stored) {
+        localStorage.setItem(STORAGE_KEY, normalized);
+      }
+      setUserNameState(normalized);
     }
   }, []);
 
   function setUserName(name: string) {
-    localStorage.setItem(STORAGE_KEY, name);
-    setUserNameState(name);
+    const normalized = name.toLowerCase();
+    localStorage.setItem(STORAGE_KEY, normalized);
+    setUserNameState(normalized);
   }
 
   return { userName, setUserName };
